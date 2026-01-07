@@ -1,0 +1,24 @@
+package com.eden.pro.dao;
+
+import java.sql.Connection;
+
+import com.eden.pro.db.DBConnection;
+
+public class UserDAO {
+
+	private static UserDAO dao = new UserDAO();
+	
+	private UserDAO() {
+		DBConnection.initConnection();
+	}	
+	
+	public UserDAO getinstance() {
+		return dao;
+	}
+	
+	
+	
+
+
+	
+}

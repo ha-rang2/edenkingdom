@@ -1,0 +1,55 @@
+package com.eden.pro.dao;
+
+public class UserDAO {
+
+	private static UserDAO dao = new UserDAO();
+	
+	private UserDAO(){
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

@@ -1,0 +1,55 @@
+package com.eden.pro.dao;
+
+
+public class UserDAO {
+
+	private UserDAO dao = new UserDAO();
+	
+	public UserDAO() {
+		
+	}	
+	
+	public UserDAO getinstance() {
+		
+		return dao;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

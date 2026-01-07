@@ -1,0 +1,35 @@
+package com.eden.pro.dao;
+
+public class SectorDAO {
+
+	public class SectorDTO {
+	    private int sectorId;           // 섹터 고유 번호
+	    private String sectorName;      // 섹터 이름
+	    private String description;     // 섹터 설명
+	    private String backgroundImage; // 배경 이미지 경로
+	    private String chatLink;        // 오픈채팅 링크
+	    private Timestamp createdAt;    // 생성일
+
+	    public SectorDTO() {}
+
+	    // Getter / Setter
+	    public int getSectorId() { return sectorId; }
+	    public void setSectorId(int sectorId) { this.sectorId = sectorId; }
+
+	    public String getSectorName() { return sectorName; }
+	    public void setSectorName(String sectorName) { this.sectorName = sectorName; }
+
+	    public String getDescription() { return description; }
+	    public void setDescription(String description) { this.description = description; }
+
+	    public String getBackgroundImage() { return backgroundImage; }
+	    public void setBackgroundImage(String backgroundImage) { this.backgroundImage = backgroundImage; }
+
+	    public String getChatLink() { return chatLink; }
+	    public void setChatLink(String chatLink) { this.chatLink = chatLink; }
+
+	    public Timestamp getCreatedAt() { return createdAt; }
+	    public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
+	}
+	
+}

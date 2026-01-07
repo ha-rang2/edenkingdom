@@ -1,0 +1,134 @@
+package com.eden.pro.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.eden.pro.db.DBConnection;
+import com.eden.pro.dto.SectorDTO;
+import com.eden.pro.dto.TeamDTO;
+import com.eden.pro.dto.UserDTO;
+
+public class UserDAO {
+
+	// 1. 싱글톤 패턴: 외부에서 함부로 바꾸지 못하도록 private static으로 선언
+	private static UserDAO dao = new UserDAO();
+	
+	// 생성자에서 드라이버 로딩 수행
+	private UserDAO() {
+		DBConnection.initConnection();
+	}
+	
+	public static UserDAO getInstance() {
+		return dao;
+	}
+
+	/**
+	 * 로그인 처리: 아이디와 비밀번호가 일치하는 유저의 모든 정보를 가져옵니다.
+	 */
+	public UserDTO login(String username, String password) {
+		String sql = " SELECT * FROM users WHERE username=? AND password=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		UserDTO dto = null;
+
+		try {
+			conn = DBConnection.getConnection(); // 중복 제거: DBConnection 활용
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, username);
+			psmt.setString(2, password);
+			
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				dto = new UserDTO();
+				// 유저 기본 정보 세팅
+				dto.setUserId(rs.getInt("user_id"));
+				dto.setUsername(rs.getString("username"));
+				dto.setNickname(rs.getString("nickname"));
+				dto.setRealName(rs.getString("real_name"));
+				dto.setBirthDate(rs.getDate("birth_date"));
+				dto.setGender(rs.getString("gender"));
+				dto.setPhone(rs.getString("phone"));
+				dto.setEmail(rs.getString("email"));
+				dto.setCreatedAt(rs.getTimestamp("created_at"));
+
+				// [중요] 다중 소속 정보 채우기
+				dto.setUserTeams(this.getJoinedTeams(conn, dto.getUserId()));
+				dto.setUserSectors(this.getJoinedSectors(conn, dto.getUserId()));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			rs.close(conn, psmt, rs);
+		}
+		return dto;
+	}
+
+	/**
+	 * 사용자가 가입한 팀 리스트 조회 (내부 활용용)
+	 */
+	private List<TeamDTO> getJoinedTeams(Connection conn, int userId) throws SQLException {
+		List<TeamDTO> list = new ArrayList<>();
+		String sql = " SELECT t.* FROM teams t "
+				   + " JOIN user_team_map utm ON t.team_id = utm.team_id "
+				   + " WHERE utm.user_id = ? ";
+		
+		PreparedStatement psmt = conn.prepareStatement(sql);
+		psmt.setInt(1, userId);
+		ResultSet rs = psmt.executeQuery();
+		
+		while(rs.next()) {
+			TeamDTO t = new TeamDTO();
+			t.setTeamId(rs.getInt("team_id"));
+			t.setTeamName(rs.getString("team_name"));
+			t.setBackgroundImage(rs.getString("background_image"));
+			t.setChatLink(rs.getString("chat_link"));
+			list.add(t);
+		}
+		rs.close();
+		psmt.close();
+		return list;
+	}
+
+	/**
+	 * 사용자가 가입한 섹터 리스트 조회 (내부 활용용)
+	 */
+	private List<SectorDTO> getJoinedSectors(Connection conn, int userId) throws SQLException {
+		List<SectorDTO> list = new ArrayList<>();
+		String sql = " SELECT s.* FROM sectors s "
+				   + " JOIN user_sector_map usm ON s.sector_id = usm.sector_id "
+				   + " WHERE usm.user_id = ? ";
+		
+		PreparedStatement psmt = conn.prepareStatement(sql);
+		psmt.setInt(1, userId);
+		ResultSet rs = psmt.executeQuery();
+		
+		while(rs.next()) {
+			SectorDTO s = new SectorDTO();
+			s.setSectorId(rs.getInt("sector_id"));
+			s.setSectorName(rs.getString("sector_name"));
+			s.setBackgroundImage(rs.getString("background_image"));
+			list.add(s);
+		}
+		rs.close();
+		psmt.close();
+		return list;
+	}
+
+	// 공통 자원 해제 메서드
+	public void close(Connection conn, Statement psmt, ResultSet rs) {
+		try {
+			if(rs != null) rs.close();
+			if(psmt != null) psmt.close();
+			if(conn != null) conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}
