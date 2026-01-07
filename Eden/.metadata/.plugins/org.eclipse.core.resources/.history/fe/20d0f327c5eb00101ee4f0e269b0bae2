@@ -1,0 +1,74 @@
+package com.eden.pro.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.eden.pro.db.DBConnection;
+import com.eden.pro.dto.TeamDTO;
+import com.eden.pro.dto.UserDTO;
+
+public class UserDAO {
+
+	private static UserDAO dao = new UserDAO();
+	
+	private UserDAO() {
+		DBConnection.initConnection();
+	}	
+	
+	public UserDAO getinstance() {
+		return dao;
+	}
+	
+	public UserDTO login(String username, String password) {
+		
+		String sql = "select * from users Where usernamme=? && password=?";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null; 
+		ResultSet rs = null;
+		
+		UserDTO dto = null;
+		
+		try {
+			
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, username);
+			psmt.setString(2, password);
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				dto = new UserDTO();
+				
+				dto.setUserId(rs.getInt("user_id"));
+				dto.setUsername(rs.getString("username"));
+				dto.setNickname(rs.getString("nickname"));
+				dto.setRealName(rs.getString("real_name"));
+				dto.setBirthDate(rs.getDate("birth_date"));
+				dto.setGender(rs.getNString("gender"));
+				dto.setPhone(rs.getString("phone"));
+				dto.setEmail(rs.getString("email"));
+				dto.setCreatedAt(rs.getTimestamp("created_at"));
+				
+				dto.setUserTeams(this.getJoinedTeams(conn, dto.getUserId()));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private List<TeamDTO> getJoinedTeams(Connection conn, int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
+
+	
+}

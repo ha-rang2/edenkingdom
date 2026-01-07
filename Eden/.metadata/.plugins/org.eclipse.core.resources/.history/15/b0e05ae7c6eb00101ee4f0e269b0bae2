@@ -1,0 +1,5 @@
+package com.eden.pro.dto;
+
+public class SectorDTO {
+
+}

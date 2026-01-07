@@ -1,0 +1,47 @@
+package com.eden.pro.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.eden.pro.db.DBConnection;
+import com.eden.pro.dto.UserDTO;
+
+public class UserDAO {
+
+	private static UserDAO dao = new UserDAO();
+	
+	private UserDAO() {
+		DBConnection.initConnection();
+	}	
+	
+	public UserDAO getinstance() {
+		return dao;
+	}
+	
+	public UserDTO login(String username, String password) {
+		
+		String sql = "select * from users Where usernamme=? && password=?";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null; 
+		ResultSet rs = null;
+		
+		UserDTO dto = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+
+
+	
+}

@@ -1,0 +1,51 @@
+package com.eden.pro.dao;
+
+import java.sql.Connection;
+
+public class UserDAO {
+
+	public UserDAO() {
+		// TODO Auto-generated constructor stub
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

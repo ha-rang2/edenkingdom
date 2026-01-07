@@ -1,0 +1,5 @@
+package com.eden.pro.dao;
+
+public class UserDAO {
+
+}

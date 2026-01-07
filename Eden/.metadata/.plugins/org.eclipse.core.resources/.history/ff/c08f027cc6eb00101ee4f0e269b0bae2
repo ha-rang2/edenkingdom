@@ -1,0 +1,40 @@
+package com.eden.pro.dao;
+
+import java.sql.Timestamp;
+
+import com.eden.pro.dto.TeamDTO;
+
+public class TeamDAO {
+
+	private int teamId;             // 팀 고유 번호
+    private String teamName;        // 팀 이름
+    private String description;     // 팀 설명
+    private String backgroundImage; // 배경 이미지 경로
+    private String chatLink;        // 오픈채팅 링크
+    private Timestamp createdAt;    // 생성일
+
+    public TeamDAO() {
+	
+	}
+
+    // Getter / Setter
+    public int getTeamId() { return teamId; }
+    public void setTeamId(int teamId) { this.teamId = teamId; }
+
+    public String getTeamName() { return teamName; }
+    public void setTeamName(String teamName) { this.teamName = teamName; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public String getBackgroundImage() { return backgroundImage; }
+    public void setBackgroundImage(String backgroundImage) { this.backgroundImage = backgroundImage; }
+
+    public String getChatLink() { return chatLink; }
+    public void setChatLink(String chatLink) { this.chatLink = chatLink; }
+
+    public Timestamp getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
+}
+	
+}

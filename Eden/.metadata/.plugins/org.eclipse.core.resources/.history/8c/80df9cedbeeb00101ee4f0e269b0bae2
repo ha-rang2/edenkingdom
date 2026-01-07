@@ -1,0 +1,67 @@
+package com.eden.pro.dao;
+
+import java.sql.Connection;
+
+public class UserDAO {
+
+	private static UserDAO dao = new UserDAO();
+	
+	private public UserDAO() {
+	
+	}
+	
+	public static UserDAO getinstance() {
+		return dao;
+	}
+	
+	public Connection getinstance() throws Exception {
+		
+		
+		
+		
+		
+		return conn;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
